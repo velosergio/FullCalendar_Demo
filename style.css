@@ -1,0 +1,695 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.header-bar {
+    background: #43a047;
+    color: #fff;
+    padding: 0.7em 0;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 20px;
+}
+
+.main-layout {
+    display: flex;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.calendar-panel {
+    flex: 2;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 24px 24px 16px 24px;
+    margin-bottom: 30px;
+}
+
+.sidebar-panel {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 24px 18px 18px 18px;
+    margin-bottom: 30px;
+    min-width: 320px;
+}
+
+.btn {
+    background: #43a047;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 22px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 18px;
+}
+.btn:hover {
+    background: #388e3c;
+}
+
+#calendar {
+    margin-top: 10px;
+    background: #fafbfc;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    padding: 10px;
+}
+
+.sidebar-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #388e3c;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#upcomingAppointmentsList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.upcoming-appointment {
+    background: #f1f8e9;
+    border-left: 4px solid #43a047;
+    margin-bottom: 14px;
+    padding: 12px 16px 10px 16px;
+    border-radius: 6px;
+    color: #222;
+    font-size: 15px;
+    box-shadow: 0 1px 4px rgba(67,160,71,0.04);
+    position: relative;
+}
+.upcoming-appointment .appt-title {
+    font-weight: 600;
+    color: #2e7d32;
+    margin-bottom: 2px;
+    font-size: 1em;
+}
+.upcoming-appointment .appt-time {
+    font-size: 0.97em;
+    color: #555;
+    margin-bottom: 2px;
+}
+.upcoming-appointment .appt-desc {
+    font-size: 0.95em;
+    color: #666;
+}
+
+#appointmentModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+#appointmentModal .modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px 28px 18px 28px;
+    max-width: 480px;
+    margin: auto;
+    box-shadow: 0 2px 10px rgba(67,160,71,0.12);
+}
+#appointmentModal label {
+    display: block;
+    margin-bottom: 5px;
+    color: #388e3c;
+    font-weight: 500;
+}
+#appointmentModal input, #appointmentModal textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 14px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 15px;
+    background: #f9fbe7;
+}
+#appointmentModal input[type="color"] {
+    width: 50px;
+    height: 35px;
+    padding: 0;
+    border: none;
+    background: none;
+    margin-bottom: 14px;
+}
+#appointmentModal .row-time {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+#appointmentModal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+}
+.btn-danger:hover {
+    background: #b52a37;
+}
+
+#appointmentModal label[for="appt_all_day"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-weight: 500;
+    color: #388e3c;
+}
+#appt_all_day {
+    width: 18px;
+    height: 18px;
+    accent-color: #43a047;
+    margin: 0;
+}
+
+.row-allday-time {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.allday-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #388e3c;
+    margin-bottom: 0;
+    min-width: 120px;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        flex-direction: column;
+        gap: 0;
+    }
+    .sidebar-panel, .calendar-panel {
+        min-width: unset;
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .row-allday-time {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .row-time {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.btn-settings {
+    background: #fff;
+    color: #388e3c;
+    border: 1.5px solid #43a047;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-settings:hover {
+    background: #43a047;
+    color: #fff;
+}
+#settingsModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+#settingsModal .modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px 28px 18px 28px;
+    max-width: 420px;
+    margin: auto;
+    box-shadow: 0 2px 10px rgba(67,160,71,0.12);
+}
+#settingsModal label {
+    display: block;
+    margin-bottom: 5px;
+    color: #388e3c;
+    font-weight: 500;
+}
+#settingsModal select, #settingsModal input[type="time"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 14px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 15px;
+    background: #f9fbe7;
+}
+#settingsModal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+@media (max-width: 600px) {
+    #settingsModal .modal-content {
+        max-width: 98vw;
+        padding: 16px 6px 10px 6px;
+    }
+}
+
+/* ===== ESTILOS DE AUTENTICACIÓN ===== */
+
+/* Contenedor principal de autenticación */
+.auth-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.13);
+    padding: 48px 70px 48px 56px;
+    width: 100%;
+    max-width: 430px;
+    position: relative;
+}
+
+/* Header de autenticación */
+.auth-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.auth-header h1 {
+    color: #43a047;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth-header i {
+    font-size: 1.2em;
+}
+
+.auth-header p {
+    color: #666;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #222;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 17px;
+    transition: border-color 0.3s;
+    background: #f9f9f9;
+    margin-bottom: 0;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #43a047;
+    background: #fff;
+}
+
+/* Requisitos de contraseña */
+.password-requirements {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Botón primario de autenticación */
+.btn-primary {
+    width: 100%;
+    background: #43a047;
+    color: white;
+    border: none;
+    padding: 15px 0;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(67,160,71,0.07);
+}
+
+.btn-primary:hover {
+    background: #388e3c;
+}
+
+/* Enlaces de autenticación */
+.auth-links {
+    text-align: center;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.auth-links a {
+    color: #43a047;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s;
+}
+
+.auth-links a:hover {
+    color: #388e3c;
+    text-decoration: underline;
+}
+
+/* Divisor */
+.divider {
+    text-align: center;
+    margin: 28px 0 18px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.divider span {
+    background: white;
+    padding: 0 15px;
+    color: #666;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Alertas de autenticación */
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Fondo de autenticación */
+.auth-body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #43a047 0%, #388e3c 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Responsive para autenticación */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 22px 6vw 18px 6vw;
+        max-width: 98vw;
+    }
+    .auth-header h1 {
+        font-size: 22px;
+    }
+    .auth-links {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .auth-container {
+        padding: 22px 6vw 18px 6vw;
+        max-width: 98vw;
+    }
+}
+
+@media (max-width: 400px) {
+    .auth-container {
+        padding: 10px 2vw 10px 2vw;
+    }
+}
+
+/* MODAL MODERNO DE CITAS */
+.appointment-modal-modern {
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(67,160,71,0.13);
+    padding: 0;
+    width: 98vw;
+    max-width: 98vw;
+    min-width: unset;
+    background: #fff;
+    overflow: hidden;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: none; /* Firefox */
+}
+.appointment-modal-modern::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+.modal-header-modern {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 22px 5vw 10px 5vw;
+    background: #fff;
+}
+.close-modal-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-modal-btn:hover {
+    color: #43a047;
+}
+.modal-body-modern {
+    padding: 18px 5vw 0 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    max-height: 60vh;
+    scrollbar-width: none; /* Firefox */
+}
+.modal-body-modern::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+.modal-body-modern label {
+    margin-top: 8px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #388e3c;
+    font-size: 1.08em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.modal-body-modern input[type="text"],
+.modal-body-modern textarea,
+.modal-body-modern select,
+.modal-body-modern input[type="datetime-local"] {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #fafbfc;
+    margin-bottom: 0;
+    transition: border-color 0.2s;
+}
+.modal-body-modern input[type="text"]:focus,
+.modal-body-modern textarea:focus,
+.modal-body-modern select:focus,
+.modal-body-modern input[type="datetime-local"]:focus {
+    border-color: #43a047;
+    background: #fff;
+    outline: none;
+}
+.modal-body-modern textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+/* Fila color y todo el día */
+.row-color-allday {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0 0 0;
+}
+.color-col {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.color-col label {
+    margin: 0;
+    font-weight: 600;
+    color: #388e3c;
+    font-size: 1.08em;
+}
+.color-col input[type="color"] {
+    width: 40px;
+    height: 32px;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: 0;
+}
+.allday-col {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+.allday-col label {
+    margin: 0;
+    font-weight: 600;
+    color: #388e3c;
+    font-size: 1.08em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.allday-col input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #43a047;
+}
+/* Fila de horas */
+.row-time-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+.row-time-modern .time-col {
+    width: 100%;
+}
+.row-time-modern label {
+    color: #388e3c;
+    font-weight: 600;
+    font-size: 1.08em;
+    margin-bottom: 4px;
+}
+.modal-actions-modern {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 18px 5vw 28px 5vw;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+.modal-actions-modern .btn-success {
+    font-size: 1.1em;
+    padding: 13px 38px;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(67,160,71,0.07);
+}
+@media (min-width: 600px) {
+    .appointment-modal-modern {
+        min-width: 370px;
+        max-width: 520px;
+        width: 100%;
+    }
+    .modal-header-modern, .modal-body-modern, .modal-actions-modern {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+    .row-color-allday {
+        flex-direction: row;
+        gap: 18px;
+    }
+    .color-col {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .allday-col {
+        flex: 1;
+        justify-content: flex-end;
+    }
+    .row-time-modern .time-col {
+        width: 100%;
+    }
+}
